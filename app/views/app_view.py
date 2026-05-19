@@ -47,7 +47,11 @@ if st.session_state.token:
     for l in livros:
         with st.container(border=True):
             col_info, col_del = st.columns([4, 1])
-            col_info.write(f"**{l['Carro']}** | {l['Ano']}")
+            if l is not None and not l.empty: 
+                col_info.write(f"**{l['Carro']}** | {l['Ano']}")
+            else:
+                col_info.write("Nenhum carro selecionado ou cadastrado.")
+                        
             if col_del.button("Excluir", key=f"del_{l['id']}"):
                 requests.delete(f"{API_URL}/livros/{l['id']}")
                 st.rerun()
