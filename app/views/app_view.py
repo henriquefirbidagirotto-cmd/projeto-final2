@@ -47,8 +47,9 @@ if st.session_state.token:
     for l in livros:
         with st.container(border=True):
             col_info, col_del = st.columns([4, 1])
-            if l is not None and not l.empty: 
-                col_info.write(f"**{l['Carro']}** | {l['Ano']}")
+            # Mude a linha 50 para isto:
+            if l:
+                col_info.write(f"**{l['carro']}** | {l['ano']}")
             else:
                 col_info.write("Nenhum carro selecionado ou cadastrado.")
                         
