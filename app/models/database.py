@@ -1,30 +1,21 @@
-import os
-from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+import streamlit as st
 
-# No Render, configure a variável de ambiente DATABASE_URL
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://user:pass@ep-shiny-pond.neon.tech/neondb")
-
-if DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
-
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
-
-class Usuario(Base):
-    __tablename__ = "usuarios"
-    id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True, index=True)
-    password_hash = Column(String)
-
-class Carros(Base):
-    __tablename__ = "carros"
-    id = Column(Integer, primary_key=True, index=True)
-    Carro = Column(String)
-    Ano = Column(String)
-    Cambio = Column(String)
-
-def init_db():
-    Base.metadata.create_all(bind=engine)
+def inicializar_banco():
+    """Conecta ao Neon e cria a tabela 'carros' se ela não existir."""
+    try:
+        # Usa o conector nativo de SQL do Streamlit puxando os secrets automaticamente
+        conn = st.connection("postgres", type="sql", url=st.secrets["postgres"]["url"])
+        
+        # Executa o comando SQL de criação de tabela
+        with conn.session as session:
+            session.execute("""
+                CREATE TABLE IF NOT EXISTS carros (
+                    id SERIAL PRIMARY KEY,
+                    carro VARCHAR(100) NOT NULL,
+                    ano INT NOT NULL,
+                    cambio VARCHAR(50) NOT NULL
+                );
+            """)
+            session.commit()
+    except Exception as e:
+        st.error(f"Erro ao inicializar o banco de dados: {e}")
