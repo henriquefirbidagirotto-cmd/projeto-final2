@@ -5,7 +5,7 @@ import streamlit as st
 from database import inicializar_banco
 
 app = FastAPI(title="API Concessionaria Digital")
-
+inicializar_banco()
 # Inicializa o banco no Neon
 init_db()
 
