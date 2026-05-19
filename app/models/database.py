@@ -19,3 +19,4 @@ def inicializar_banco():
             session.commit()
     except Exception as e:
         st.error(f"Erro ao inicializar o banco de dados: {e}")
+session.commit()
