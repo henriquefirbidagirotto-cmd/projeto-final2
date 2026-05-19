@@ -4,7 +4,8 @@ from passlib.context import CryptContext
 from datetime import datetime, timedelta
 
 # Tenta pegar a chave do Render. Se não achar (local), usa uma chave de teste.
-SECRET_KEY = os.getenv("SECRET_KEY", "chave_temporaria_para_testes_locais")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://neondb_owner:npg_RZfnFNj06uzI@ep-young-union-ap9w4iy9-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require")
+SECRET_KEY = os.getenv("SECRET_KEY", "ac8d04c650b05bd4a6abb53c8d56ef802390b0cbbf6abd6d645ef9e5e6649237")
 ALGORITHM = "HS256"
 
 # configuração que evita o bug do bcrypt em versões novas do Python
