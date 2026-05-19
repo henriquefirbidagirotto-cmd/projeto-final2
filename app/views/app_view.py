@@ -37,7 +37,7 @@ if st.session_state.token:
         tit = c1.text_input("Carro")
         aut = c2.text_input("Ano")
         das = c3.text_input("Cambio")
-        if st.button("Salvar Livro"):
+        if st.button("Salvar Carro"):
             requests.post(f"{API_URL}/Carros", json={"Carro": tit, "Ano": aut, "Cambio": das})
             st.toast("Pedido adicionado!")
             st.rerun()
